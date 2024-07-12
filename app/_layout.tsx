@@ -1,14 +1,14 @@
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { Drawer } from 'expo-router/drawer';
+
 import { DarkTheme, ThemeProvider } from '@react-navigation/native';
 import { useColorScheme } from 'nativewind';
+import { Slot } from "expo-router";
 
-import "../global.css"
+import "../global.css";
 import { MyLightTheme } from '../utilities/themeOptions';    
 import { useEffect } from 'react';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export default function Layout() {
+export default function RootLayout() {
   const { colorScheme, setColorScheme} = useColorScheme ();
   useEffect(() => {
     const loadTheme = async () => {
@@ -27,32 +27,7 @@ export default function Layout() {
   
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : MyLightTheme}>
-    
-    <GestureHandlerRootView className = "flex-1">
-      <Drawer>
-      <Drawer.Screen
-          name="(tabs)" // This is the name of the page and must match the url from root
-          options={{
-            drawerLabel: 'Home',
-            title: '',
-          }}
-        />
-        <Drawer.Screen
-          name="shop" // This is the name of the page and must match the url from root
-          options={{
-            drawerLabel: 'Shop',
-            title: 'Shop',
-          }}
-        />
-        <Drawer.Screen
-          name="settings" // This is the name of the page and must match the url from root
-          options={{
-            drawerLabel: 'Settings',
-            title: 'Settings',
-          }}
-        />
-      </Drawer>
-    </GestureHandlerRootView>
+    <Slot />
     </ThemeProvider>
   );
 }
